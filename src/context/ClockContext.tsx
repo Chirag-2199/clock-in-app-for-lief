@@ -1,5 +1,14 @@
 import { createContext, useContext, ReactNode, useState } from 'react'
 
+type Geofence = {
+    id: string
+    radius: number
+    center: {
+        lat: number
+        lng: number
+    }
+}
+
 type Shift = {
     id: string
     start: Date
@@ -13,6 +22,8 @@ type ClockContextType = {
     clockIn: (location: string, note?: string) => void
     clockOut: (note?: string) => void
     shifts: Shift[]
+    geofence?: Geofence
+    updateGeofence?: (geofence: Geofence) => void;
 }
 
 const ClockContext = createContext<ClockContextType>(null!)

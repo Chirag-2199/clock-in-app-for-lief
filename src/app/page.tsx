@@ -1,7 +1,7 @@
 'use client'; // Required for Next.js 13+ with client-side interactivity
 
 import { useState, createContext, useContext, ReactNode } from 'react';
-import { Box, Button, Text, TextInput, Table, TableHeader, TableRow, TableCell } from 'grommet';
+import { Box, Button, Text, TextInput, Table, TableHeader, TableRow, TableCell, TableBody } from 'grommet';
 
 // 1. Create Contexts
 type User = {
@@ -108,13 +108,13 @@ function ClockInOut() {
                 <TextInput
                     placeholder="Enter your location"
                     value={location}
-                    onChange={(e) => setLocation(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLocation(e.target.value)}
                 />
             )}
             <TextInput
                 placeholder="Add note (optional)"
                 value={note}
-                onChange={(e) => setNote(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNote(e.target.value)}
             />
             <Button
                 primary
@@ -157,24 +157,39 @@ function StaffTable() {
     return (
         <Box pad="medium">
             <Text size="large" weight="bold">Staff Shifts</Text>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableCell><Text weight="bold">Time</Text></TableCell>
-                        <TableCell><Text weight="bold">Location</Text></TableCell>
-                        <TableCell><Text weight="bold">Status</Text></TableCell>
-                    </TableRow>
-                </TableHeader>
-                <tbody>
-                    {clock.shifts.map((shift) => (
-                        <TableRow key={shift.id}>
-                            <TableCell>{new Date(shift.start).toLocaleTimeString()} - {shift.end ? new Date(shift.end).toLocaleTimeString() : 'Now'}</TableCell>
-                            <TableCell>{shift.location}</TableCell>
-                            <TableCell>{shift.end ? 'Completed' : 'In Progress'}</TableCell>
-                        </TableRow>
-                    ))}
-                </tbody>
-            </Table>
+
+            {/* Table Header */}
+            <Box direction="row" gap="medium" pad="small" border="bottom">
+                <Box width="200px"><Text weight="bold">Time</Text></Box>
+                <Box width="200px"><Text weight="bold">Location</Text></Box>
+                <Box width="200px"><Text weight="bold">Status</Text></Box>
+            </Box>
+
+            {/* Table Rows */}
+            {clock.shifts.map((shift) => (
+                <Box
+                    key={shift.id}
+                    direction="row"
+                    gap="medium"
+                    pad="small"
+                    border={{ side: 'bottom' }}
+                >
+                    <Box width="200px">
+                        <Text>
+                            {new Date(shift.start).toLocaleTimeString()} -
+                            {shift.end ? new Date(shift.end).toLocaleTimeString() : ' Now'}
+                        </Text>
+                    </Box>
+                    <Box width="200px">
+                        <Text>{shift.location}</Text>
+                    </Box>
+                    <Box width="200px">
+                        <Text color={shift.end ? 'status-ok' : 'status-critical'}>
+                            {shift.end ? 'Completed' : 'In Progress'}
+                        </Text>
+                    </Box>
+                </Box>
+            ))}
         </Box>
     );
 }

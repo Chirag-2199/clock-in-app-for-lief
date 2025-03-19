@@ -10,7 +10,7 @@ export default function GeoFenceForm() {
             <Form
                 value={geofence}
                 onSubmit={({ value }) => {
-                    if (value) {
+                    if (value && updateGeofence) {
                         updateGeofence(value)
                     }
                 }}

@@ -1,12 +1,13 @@
-import { Box, Grid, Heading } from 'grommet'
-import { BarChart, PieChart, Pie, Bar, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
+import React, { ReactNode } from 'react';
+import { Box, Grid, Heading } from 'grommet';
+import { BarChart, PieChart, Pie, Bar, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+
 type Shift = {
     id: number;
     employeeId: number;
     startTime: string;
     endTime: string;
-    // Add other fields as necessary
-}
+};
 
 const sampleData = [
     { day: 'Mon', hours: 8 },
@@ -14,14 +15,14 @@ const sampleData = [
     { day: 'Wed', hours: 9 },
     { day: 'Thu', hours: 8.2 },
     { day: 'Fri', hours: 8.5 }
-]
+];
 
 export default function AnalyticsDashboard({ shifts }: { shifts: Shift[] }) {
     return (
         <Box pad="medium" gap="medium">
             <Heading level="2">Weekly Analytics</Heading>
 
-            <Grid columns={['1fr', '1fr']} gap="medium">
+            <Grid columns={['1fr', '1fr']} gap="medium" {...({} as any)}>
                 <Box>
                     <Box background="light-2" pad="medium" round="small">
                         <Heading level="3" margin="none">Daily Hours</Heading>
@@ -53,6 +54,7 @@ export default function AnalyticsDashboard({ shifts }: { shifts: Shift[] }) {
                     </Box>
                 </Box>
             </Grid>
+
         </Box>
-    )
+    );
 }

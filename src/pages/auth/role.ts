@@ -12,12 +12,12 @@ export default async function handler(
     }
 
     // In real implementation, fetch role from your database
-    const mockRoles = {
+    const mockRoles: { [key: string]: string } = {
         'careworker@example.com': 'careworker',
         'manager@example.com': 'manager'
     }
 
-    const role = mockRoles[session.user.email] || 'careworker'
+    const role = mockRoles[session.user.email as string] || 'careworker'
 
     res.status(200).json({ role })
 }
